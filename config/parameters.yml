@@ -1,0 +1,10 @@
+parameters:
+    app_secret: 'd6a3af87718fae665bca4b49a5af3e0d'
+    database_driver: 'pgsql'
+    database_version: '11'
+    database_host: 'localhost'
+    database_port: 5432
+    database_name: 'mbti-messenger'
+    database_user: 'nook'
+    database_password: 'nook'
+    env_host: 'http://mbti-bot.nook.sh'
