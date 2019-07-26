@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MessengerController extends AbstractController
 {
     /**
-     * @Route("/messenger/webhook", name="messenger_webhook_post", methods={GET})
+     * @Route("/messenger/webhook", name="messenger_webhook_get", methods={"GET"})
      */
     public function webhookGet(Request $request)
     {
@@ -20,7 +20,7 @@ class MessengerController extends AbstractController
     }
 
     /**
-     * @Route("/messenger/webhook", name="messenger_webhook_post", methods={POST})
+     * @Route("/messenger/webhook", name="messenger_webhook_post", methods={"POST"})
      */
     public function webhookPost(Request $request)
     {
