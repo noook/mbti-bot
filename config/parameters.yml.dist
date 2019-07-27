@@ -1,0 +1,12 @@
+parameters:
+    app_secret: ''
+    database_driver: 'pgsql'
+    database_version: '11'
+    database_host: 'localhost'
+    database_port: 5432
+    database_name: ''
+    database_user: ''
+    database_password: ''
+    env_host: ''
+
+    messenger_verify_token: ''
