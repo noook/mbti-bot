@@ -9,5 +9,10 @@ parameters:
     database_password: ''
     env_host: ''
 
+    # Messenger
     messenger_verify_token: ''
     messenger_api_token: ''
+
+    # Golem
+    golem_token: ''
+    default_language: fr

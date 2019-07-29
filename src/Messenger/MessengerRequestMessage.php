@@ -14,6 +14,7 @@ class MessengerRequestMessage
     private $text;
     private $postback;
     private $quickReply;
+    private $type;
 
     public function __construct(array $entry)
     {
@@ -27,12 +28,15 @@ class MessengerRequestMessage
             $this->setMid($message['message']['mid']);
             $this->setSeq($message['message']['seq']);
             $this->setText($message['message']['text']);
+            $this->type = 'message';
         }
         if (isset($message['postback']['payload'])) {
+            $this->type = 'postback';
             $this->setPostback($message['postback']['payload']);
         }
 
         if (isset($message['message']['quick_reply'])) {
+            $this->type = 'quick_reply';
             $this->setQuickReply($message['message']['quick_reply']['payload']);
         }
     }
@@ -163,5 +167,10 @@ class MessengerRequestMessage
         $this->quickReply = $text;
 
         return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
     }
 }

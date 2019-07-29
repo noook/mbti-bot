@@ -7,9 +7,10 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use App\Collection\MessengerEventHandlerCollection;
+use App\Helper\Logger;
 use App\Messenger\MessengerRequest;
 use App\Messenger\MessengerApi;
-use App\Helper\Logger;
 
 class MessengerController extends AbstractController
 {
@@ -38,9 +39,8 @@ class MessengerController extends AbstractController
     /**
      * @Route("/messenger/webhook", name="messenger_webhook_post", methods={"POST"})
      */
-    public function webhookPost(Request $request, Logger $logger, MessengerApi $messengerApi)
+    public function webhookPost(Request $request, MessengerApi $messengerApi, MessengerEventHandlerCollection $messengerEventHandlerCollection)
     {
-        $logger->logJson('messenger-request-post.log', $request->getContent());
         $messengerRequest = new MessengerRequest($request->getContent());
         
         if (self::OBJECT_REQUEST === $messengerRequest->getObject()) {
@@ -49,6 +49,10 @@ class MessengerController extends AbstractController
                     ->setRecipient($message->getSender())
                     ->markSeen()
                     ->setTyping('on');
+
+                $messengerEventHandlerCollection
+                    ->get($message->getType())
+                    ->handle($message);
 
                 $messengerApi->setTyping('off');
             }

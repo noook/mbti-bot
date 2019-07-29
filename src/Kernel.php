@@ -8,6 +8,7 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use App\DependencyInjection\Compiler\MessengerEventPass;
 
 class Kernel extends BaseKernel
 {
@@ -23,6 +24,11 @@ class Kernel extends BaseKernel
                 yield new $class();
             }
         }
+    }
+
+    protected function build(ContainerBuilder $container)
+    {
+        $container->addCompilerPass(new MessengerEventPass());
     }
 
     public function getProjectDir(): string
