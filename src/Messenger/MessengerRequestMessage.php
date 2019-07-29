@@ -19,10 +19,10 @@ class MessengerRequestMessage
     {
         $message = $entry['messaging'][0];
         $this->setId($entry['id']);
-        $this->setEventTime($entry['time']);
+        $this->setEventTime((int) $entry['time']);
         $this->setSender($message['sender']);
         $this->setRecipient($message['recipient']);
-        $this->setTimestamp($message['timestamp']);
+        $this->setTimestamp((int) $message['timestamp']);
         if (isset($message['message'])) {
             $this->setMid($message['message']['mid']);
             $this->setSeq($message['message']['seq']);

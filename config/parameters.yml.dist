@@ -10,3 +10,4 @@ parameters:
     env_host: ''
 
     messenger_verify_token: ''
+    messenger_api_token: ''

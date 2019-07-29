@@ -5,12 +5,16 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
-use App\Helper\Logger;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use App\Messenger\MessengerRequest;
+use App\Messenger\MessengerApi;
+use App\Helper\Logger;
 
 class MessengerController extends AbstractController
 {
+    const OBJECT_REQUEST = 'page';
+
     /**
      * @Route("/messenger/webhook", name="messenger_webhook_get", methods={"GET"})
      */
@@ -34,11 +38,22 @@ class MessengerController extends AbstractController
     /**
      * @Route("/messenger/webhook", name="messenger_webhook_post", methods={"POST"})
      */
-    public function webhookPost(Request $request)
+    public function webhookPost(Request $request, Logger $logger, MessengerApi $messengerApi)
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/MessengerController.php',
-        ]);
+        $logger->logJson('messenger-request-post.log', $request->getContent());
+        $messengerRequest = new MessengerRequest($request->getContent());
+        
+        if (self::OBJECT_REQUEST === $messengerRequest->getObject()) {
+            foreach ($messengerRequest->getEntries() as $message) {
+                $messengerApi
+                    ->setRecipient($message->getSender())
+                    ->markSeen()
+                    ->setTyping('on');
+
+                $messengerApi->setTyping('off');
+            }
+        }
+
+        return new Response('EVENT RECEIVED', Response::HTTP_OK);
     }
 }

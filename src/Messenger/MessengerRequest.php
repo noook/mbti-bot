@@ -29,6 +29,11 @@ class MessengerRequest
         return $this->object;
     }
 
+    /**
+     * Return message entries from a request
+     *
+     * @return MessengerRequestMessage[]
+     */
     public function getEntries(): array
     {
         return $this->entries;
