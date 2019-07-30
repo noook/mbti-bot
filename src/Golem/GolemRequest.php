@@ -24,4 +24,9 @@ class GolemRequest
             $this->params[$key] = $options[$key] ??  $default;
         }
     }
+
+    public function getParams(): array
+    {
+        return $this->params;
+    }
 }

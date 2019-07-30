@@ -14,5 +14,6 @@ parameters:
     messenger_api_token: ''
 
     # Golem
+    golem_url: ''
     golem_token: ''
     default_language: fr

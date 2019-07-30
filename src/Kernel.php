@@ -8,6 +8,7 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use App\DependencyInjection\Compiler\ContextHandlerPass;
 use App\DependencyInjection\Compiler\MessengerEventPass;
 
 class Kernel extends BaseKernel
@@ -28,6 +29,7 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(new ContextHandlerPass());
         $container->addCompilerPass(new MessengerEventPass());
     }
 

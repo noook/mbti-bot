@@ -2,17 +2,21 @@
 
 namespace App\Handler\MessengerEvent;
 
-use App\Golem\GolemRequestFactory;
+use App\Collection\ContextHandlerCollection;
+use App\Golem\GolemManager;
 use App\Messenger\MessengerRequestMessage;
 
 class MessageHandler implements MessengerEventHandlerInterface
 {
-    private $golemRequestFactory;
+    private $golemManager;
+    private $contextHandlerCollection;
 
-    public function __construct(GolemRequestFactory $golemRequestFactory)
+    public function __construct(GolemManager $golemManager, ContextHandlerCollection $contextHandlerCollection)
     {
-        $this->golemRequestFactory = $golemRequestFactory;
+        $this->golemManager = $golemManager;
+        $this->contextHandlerCollection = $contextHandlerCollection;
     }
+
     public function getAlias(): string
     {
         return MessengerHandlerEventAliases::MESSAGE_HANDLER;
@@ -23,6 +27,14 @@ class MessageHandler implements MessengerEventHandlerInterface
      */
     public function handle(MessengerRequestMessage $message)
     {
-        $golemRequest = $this->golemRequestFactory->create();
+        $golemRequest = $this->golemManager->createRequest(['text' => $message->getText()]);
+        $golemResponse = $this->golemManager->makeRequest($golemRequest);
+
+        if ($this->contextHandlerCollection->has($golemResponse->getCall()->getContextId())) {
+            $this
+                ->contextHandlerCollection
+                ->get($golemResponse->getCall()->getContextId())
+                ->handleResponse($golemResponse);
+        }
     }
 }

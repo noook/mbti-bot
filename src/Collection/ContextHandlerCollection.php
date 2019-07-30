@@ -3,9 +3,9 @@
 namespace App\Collection;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Handler\MessengerEvent\MessengerEventHandlerInterface;
+use App\Handler\Context\ContextHandlerInterface;
 
-class MessengerEventHandlerCollection
+class ContextHandlerCollection
 {
     private $collection;
 
@@ -19,15 +19,15 @@ class MessengerEventHandlerCollection
         return isset($this->collection[$alias]);
     }
 
-    public function add(MessengerEventHandlerInterface $messengerEventHandler)
+    public function add(ContextHandlerInterface $contextHandlerInterface)
     {
-        $this->collection[$messengerEventHandler->getAlias()] = $messengerEventHandler;
+        $this->collection[$contextHandlerInterface->getAlias()] = $contextHandlerInterface;
     }
 
-    public function get(string $alias): MessengerEventHandlerInterface
+    public function get(string $alias): ContextHandlerInterface
     {
         if (!isset($this->collection[$alias])) {
-            throw new NotFoundHttpException;
+            throw new NotFoundHttpException();
         }
         
         return $this->collection[$alias];
