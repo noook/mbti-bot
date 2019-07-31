@@ -2,8 +2,9 @@
 
 namespace App\Handler\Context;
 
-use App\Golem\GolemResponse;
 use App\Collection\InteractionHandlerCollection;
+use App\Golem\GolemResponse;
+use App\Messenger\MessengerRequestMessage;
 
 class SmallTalkContextHandler implements ContextHandlerInterface
 {
@@ -19,7 +20,7 @@ class SmallTalkContextHandler implements ContextHandlerInterface
         return ContextHandlerAliases::SMALL_TALK;
     }
 
-    public function handleResponse(GolemResponse $golemResponse)
+    public function handleResponse(MessengerRequestMessage $messengerRequest, GolemResponse $golemResponse)
     {
         $interactionId = $golemResponse->getCall()->getInteractionId();
 
@@ -27,7 +28,7 @@ class SmallTalkContextHandler implements ContextHandlerInterface
             $this
                 ->interactionHandlerCollection
                 ->get($interactionId)
-                ->handleInteraction($golemResponse);
+                ->handleInteraction($messengerRequest, $golemResponse);
         }
     }
 }

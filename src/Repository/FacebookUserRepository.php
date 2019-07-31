@@ -29,7 +29,8 @@ class FacebookUserRepository extends ServiceEntityRepository
             $result
                 ->setFbid($user->getFbid())
                 ->setFirstname($user->getFirstname())
-                ->setLastname($user->getLastname());
+                ->setLastname($user->getLastname())
+                ->setLastActive($user->getLastActive());
         }
 
         $this->_em->flush();

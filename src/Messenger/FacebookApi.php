@@ -20,7 +20,7 @@ class FacebookApi
     private function getInformations(string $fbid): FacebookUser
     {
         $url = 'https://graph.facebook.com/' . $fbid;
-        $fields = implode(',', ['first_name', 'last_name']);
+        $fields = implode(',', ['first_name', 'last_name', 'locale']);
 
         $query = http_build_query([
             'fields' => $fields,
@@ -41,6 +41,7 @@ class FacebookApi
             ->setFbid($response['id'])
             ->setFirstname($response['first_name'])
             ->setLastname($response['last_name'])
+            ->setLocale($response['locale'])
             ->setLastActive(new \DateTimeImmutable());
     }
 

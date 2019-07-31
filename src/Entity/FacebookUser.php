@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +37,21 @@ class FacebookUser
      * @ORM\Column(type="datetime")
      */
     private $lastActive;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MbtiTest", mappedBy="user", orphanRemoval=true)
+     */
+    private $mbtiTests;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $locale;
+
+    public function __construct()
+    {
+        $this->mbtiTests = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -85,6 +102,48 @@ class FacebookUser
     public function setLastActive(\DateTimeInterface $lastActive): self
     {
         $this->lastActive = $lastActive;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MbtiTest[]
+     */
+    public function getMbtiTests(): Collection
+    {
+        return $this->mbtiTests;
+    }
+
+    public function addMbtiTest(MbtiTest $mbtiTest): self
+    {
+        if (!$this->mbtiTests->contains($mbtiTest)) {
+            $this->mbtiTests[] = $mbtiTest;
+            $mbtiTest->setAaa($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMbtiTest(MbtiTest $mbtiTest): self
+    {
+        if ($this->mbtiTests->contains($mbtiTest)) {
+            $this->mbtiTests->removeElement($mbtiTest);
+            if ($mbtiTest->getUser() === $this) {
+                $mbtiTest->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLocale(): ?string
+    {
+        return $this->locale;
+    }
+
+    public function setLocale(?string $locale): self
+    {
+        $this->locale = $locale;
 
         return $this;
     }

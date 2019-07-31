@@ -34,7 +34,7 @@ class MessageHandler implements MessengerEventHandlerInterface
             $this
                 ->contextHandlerCollection
                 ->get($golemResponse->getCall()->getContextId())
-                ->handleResponse($golemResponse);
+                ->handleResponse($message, $golemResponse);
         }
     }
 }
