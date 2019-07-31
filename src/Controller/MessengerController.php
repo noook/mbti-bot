@@ -11,6 +11,7 @@ use App\Collection\MessengerEventHandlerCollection;
 use App\Helper\Logger;
 use App\Messenger\MessengerRequest;
 use App\Messenger\MessengerApi;
+use App\Messenger\FacebookApi;
 
 class MessengerController extends AbstractController
 {
@@ -39,12 +40,18 @@ class MessengerController extends AbstractController
     /**
      * @Route("/messenger/webhook", name="messenger_webhook_post", methods={"POST"})
      */
-    public function webhookPost(Request $request, MessengerApi $messengerApi, MessengerEventHandlerCollection $messengerEventHandlerCollection)
+    public function webhookPost(
+        Request $request,
+        MessengerApi $messengerApi,
+        MessengerEventHandlerCollection $messengerEventHandlerCollection,
+        FacebookApi $facebookApi
+    ): Response
     {
         $messengerRequest = new MessengerRequest($request->getContent());
         
         if (self::OBJECT_REQUEST === $messengerRequest->getObject()) {
             foreach ($messengerRequest->getEntries() as $message) {
+                $facebookApi->updateUser($message->getSender());
                 $messengerApi
                     ->setRecipient($message->getSender())
                     ->markSeen()
