@@ -5,7 +5,7 @@ namespace App\Handler\Context;
 use App\Golem\GolemResponse;
 use App\Collection\InteractionHandlerCollection;
 
-class MbtiContextHandler implements ContextHandlerInterface
+class SmallTalkContextHandler implements ContextHandlerInterface
 {
     private $interactionHandlerCollection;
 
@@ -16,7 +16,7 @@ class MbtiContextHandler implements ContextHandlerInterface
 
     public function getAlias(): string
     {
-        return ContextHandlerAliases::MBTI;
+        return ContextHandlerAliases::SMALL_TALK;
     }
 
     public function handleResponse(GolemResponse $golemResponse)

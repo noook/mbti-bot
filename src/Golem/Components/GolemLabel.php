@@ -15,9 +15,9 @@ class GolemLabel
     {
         $this->type = $data['type'];
         $this->expression = $data['expression'];
-        $this->archetype = $data['archetype'];
-        $this->usedParameter = $data['used_parameter'];
-        $this->interactionId = $data['interaction_id'];
+        $this->archetype = $data['archetype'] ?? null;
+        $this->usedParameter = $data['used_parameter'] ?? null;
+        $this->interactionId = $data['interaction_id'] ?? null;
         $this->callIdx = $data['call_idx'];
     }
 
@@ -31,17 +31,17 @@ class GolemLabel
         return $this->expression;
     }
 
-    public function getArchetype(): string
+    public function getArchetype(): ?string
     {
         return $this->archetype;
     }
 
-    public function getUsedParameter(): string
+    public function getUsedParameter(): ?string
     {
         return $this->usedParameter;
     }
 
-    public function getInteractionId(): string
+    public function getInteractionId(): ?string
     {
         return $this->interactionId;
     }
