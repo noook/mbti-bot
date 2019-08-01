@@ -27,4 +27,12 @@ class MbtiTestRepository extends ServiceEntityRepository
             'user' => $user,
         ]);
     }
+
+    public function nextStep(MbtiTest $test)
+    {
+        $test
+            ->setStep($test->getStep() + 1);
+
+        $this->_em->flush();
+    }
 }

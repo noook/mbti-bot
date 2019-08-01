@@ -2,3 +2,4 @@ lets_start_test: Alright, let's start the test ! 😁
 test_is_40_questions_long: The test is made of 40 questions of the same format, which you can answer by two options.
 answer_like_this: Answer naturally, and don't put yourself in a professional situation. Your natural behaviour often changes in those situations.
 test_already_started: A test has already started. Would you like to continue or start over ?
+question_x_of_y: "Question {step} / 40:"

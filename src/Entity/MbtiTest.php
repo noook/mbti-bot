@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -56,6 +58,16 @@ class MbtiTest
      * @ORM\Column(type="integer", nullable=true)
      */
     private $PJ;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MbtiAnswer", mappedBy="test", orphanRemoval=true)
+     */
+    private $answers;
+
+    public function __construct()
+    {
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +166,37 @@ class MbtiTest
     public function setPJ(?int $PJ): self
     {
         $this->PJ = $PJ;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|MbtiAnswer[]
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(MbtiAnswer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers[] = $answer;
+            $answer->setTest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(MbtiAnswer $answer): self
+    {
+        if ($this->answers->contains($answer)) {
+            $this->answers->removeElement($answer);
+            // set the owning side to null (unless already changed)
+            if ($answer->getTest() === $this) {
+                $answer->setTest(null);
+            }
+        }
 
         return $this;
     }

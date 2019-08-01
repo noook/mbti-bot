@@ -2,3 +2,4 @@ lets_start_test: Très bien commençons le test ! 😁
 test_is_40_questions_long: Le test est composé de 40 questions du même format, auxquelles vous pourez répondre par deux options.
 answer_like_this: Répondez de façon naturelle, et ne vous situez pas dans un contexte professionnel. Votre comportement est différent dans ces situations.
 test_already_started: Un test est déjà en cours, voulez vous le continuer ou le recommencer ?
+question_x_of_y: "Question {step} / 40:"

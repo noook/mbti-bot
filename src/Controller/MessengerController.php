@@ -20,7 +20,7 @@ class MessengerController extends AbstractController
     /**
      * @Route("/messenger/webhook", name="messenger_webhook_get", methods={"GET"})
      */
-    public function webhookGet(Request $request, Logger $logger)
+    public function webhookGet(Request $request)
     {
         $verifyToken = $this->getParameter('messenger_verify_token');
         $data = $request->query->all();
