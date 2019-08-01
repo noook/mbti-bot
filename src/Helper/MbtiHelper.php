@@ -3,10 +3,11 @@
 namespace App\Helper;
 
 use Symfony\Component\Translation\TranslatorInterface;
+use App\Entity\FacebookUser;
 use App\Entity\MbtiTest;
+use App\Formatter\MessageFormatterAliases;
 use App\Repository\MbtiQuestionRepository;
 use App\Repository\MbtiTestRepository;
-use App\Entity\FacebookUser;
 
 class MbtiHelper
 {
@@ -53,13 +54,14 @@ class MbtiHelper
             ],
         ];
         $text = implode("\n", [
-            $emojis[0]. ': ' . $this->translator->trans($questions[0]->getStep() . '.' . $questions[0]->getKey(), [], 'mbti', $user->getLocale()),
+            $emojis[0]. ' ' . $this->translator->trans($questions[0]->getStep() . '.' . $questions[0]->getKey(), [], 'mbti', $user->getLocale()),
             '',
-            $emojis[1]. ': ' . $this->translator->trans($questions[1]->getStep() . '.' . $questions[1]->getKey(), [], 'mbti', $user->getLocale()),
+            $emojis[1]. ' ' . $this->translator->trans($questions[1]->getStep() . '.' . $questions[1]->getKey(), [], 'mbti', $user->getLocale()),
         ]);
         shuffle($payloads);
 
         return [
+            'type' => MessageFormatterAliases::QUICK_REPLY,
             'text' => $text,
             'quick_replies' => array_map(function ($item) {
                 return [

@@ -54,14 +54,11 @@ class MessengerController extends AbstractController
                 $facebookApi->updateUser($message->getSender());
                 $messengerApi
                     ->setRecipient($message->getSender())
-                    ->markSeen()
-                    ->setTyping('on');
+                    ->markSeen();
 
                 $messengerEventHandlerCollection
                     ->get($message->getType())
                     ->handle($message);
-
-                $messengerApi->setTyping('off');
             }
         }
 
