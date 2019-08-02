@@ -42,27 +42,52 @@ class MbtiTest
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $EI;
+    private $E;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $NS;
+    private $I;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $TF;
+    private $N;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $PJ;
+    private $S;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $T;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $F;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $P;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $J;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MbtiAnswer", mappedBy="test", orphanRemoval=true)
      */
     private $answers;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $completed_at;
 
     public function __construct()
     {
@@ -122,50 +147,98 @@ class MbtiTest
         return $this;
     }
 
-    public function getEI(): ?int
+    public function getE(): ?int
     {
-        return $this->EI;
+        return $this->E;
     }
 
-    public function setEI(?int $EI): self
+    public function setE(?int $E): self
     {
-        $this->EI = $EI;
+        $this->E = $E;
 
         return $this;
     }
 
-    public function getNS(): ?int
+    public function getI(): ?int
     {
-        return $this->NS;
+        return $this->E;
     }
 
-    public function setNS(?int $NS): self
+    public function setI(?int $I): self
     {
-        $this->NS = $NS;
+        $this->I = $I;
 
         return $this;
     }
 
-    public function getTF(): ?int
+    public function getN(): ?int
     {
-        return $this->TF;
+        return $this->N;
     }
 
-    public function setTF(?int $TF): self
+    public function setN(?int $N): self
     {
-        $this->TF = $TF;
+        $this->N = $N;
 
         return $this;
     }
 
-    public function getPJ(): ?int
+    public function getS(): ?int
     {
-        return $this->PJ;
+        return $this->S;
     }
 
-    public function setPJ(?int $PJ): self
+    public function setS(?int $S): self
     {
-        $this->PJ = $PJ;
+        $this->S = $S;
+
+        return $this;
+    }
+
+    public function getT(): ?int
+    {
+        return $this->T;
+    }
+
+    public function setT(?int $T): self
+    {
+        $this->T = $T;
+
+        return $this;
+    }
+
+    public function getF(): ?int
+    {
+        return $this->F;
+    }
+
+    public function setF(?int $F): self
+    {
+        $this->F = $F;
+
+        return $this;
+    }
+
+    public function getJ(): ?int
+    {
+        return $this->J;
+    }
+
+    public function setJ(?int $J): self
+    {
+        $this->J = $J;
+
+        return $this;
+    }
+
+    public function getP(): ?int
+    {
+        return $this->P;
+    }
+
+    public function setP(?int $P): self
+    {
+        $this->P = $P;
 
         return $this;
     }
@@ -197,6 +270,18 @@ class MbtiTest
                 $answer->setTest(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompletedAt(): ?\DateTimeInterface
+    {
+        return $this->completed_at;
+    }
+
+    public function setCompletedAt(?\DateTimeInterface $completed_at): self
+    {
+        $this->completed_at = $completed_at;
 
         return $this;
     }

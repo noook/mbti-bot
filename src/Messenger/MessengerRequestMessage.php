@@ -26,7 +26,7 @@ class MessengerRequestMessage
         $this->setTimestamp((int) $message['timestamp']);
         if (isset($message['message'])) {
             $this->setMid($message['message']['mid']);
-            $this->setSeq($message['message']['seq']);
+            $this->setSeq($message['message']['seq'] ?? null);
             $this->setText($message['message']['text']);
             $this->type = 'message';
         }
@@ -118,7 +118,7 @@ class MessengerRequestMessage
         return $this->seq;
     }
 
-    public function setSeq(int $seq): self
+    public function setSeq(?int $seq): self
     {
         $this->seq = $seq;
 

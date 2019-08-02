@@ -16,6 +16,8 @@ use App\Repository\MbtiTestRepository;
 class MbtiHelper
 {
     const EMOJI_VOTE = ['🥝', '🍉', '🍎', '🍑', '🍍'];
+    const DICHOTOMIES = ['I', 'E', 'N', 'S', 'T', 'F', 'J', 'P'];
+    const DICHOTOMY_PAIRS = [['I', 'E'], ['N', 'S'], ['T', 'F'], ['J', 'P']];
 
     private $facebookUserRepository;
     private $mbtiQuestionRepository;
@@ -68,9 +70,9 @@ class MbtiHelper
         ];
         $text = implode("\n", [
             $this->translator->trans('question_x_of_y', ['{step}' => $questions[0]->getStep()], null, $user->getLocale()),
-            $emojis[0]. ' ' . $this->translator->trans($questions[0]->getStep() . '.' . $questions[0]->getKey(), [], 'mbti', $user->getLocale()),
+            $emojis[0]. ' ' . $this->translator->trans($questions[0]->getStep() . '.' . $questions[0]->getKey(), [], 'mbti-questions', $user->getLocale()),
             '',
-            $emojis[1]. ' ' . $this->translator->trans($questions[1]->getStep() . '.' . $questions[1]->getKey(), [], 'mbti', $user->getLocale()),
+            $emojis[1]. ' ' . $this->translator->trans($questions[1]->getStep() . '.' . $questions[1]->getKey(), [], 'mbti-questions', $user->getLocale()),
         ]);
         shuffle($payloads);
 
@@ -91,7 +93,7 @@ class MbtiHelper
         ];
     }
 
-    public function answerQuestion(string $fbid, string $value): array
+    public function answerQuestion(string $fbid, string $value): ?array
     {
         $user = $this->facebookUserRepository->findOneBy(['fbid' => $fbid]);
         $test = $this->mbtiTestRepository->findOneBy([
@@ -106,8 +108,44 @@ class MbtiHelper
         $this->mbtiAnswerRepository->saveAnswer($answer);
         $this->mbtiTestRepository->nextStep($test);
 
+        if (true === $test->getCompleted()) {
+            $this->completeTest($test);
+            return null;
+        }
+
         $questions = $this->getNextQuestion($test);
 
         return $this->prepareQuestion($questions, $user);
+    }
+
+    public function completeTest(MbtiTest $test)
+    {
+        $this->calculate($test);
+    }
+
+    private function calculate(MbtiTest $test)
+    {
+        $answers = $test->getAnswers()->toArray();
+        $keys = array_reduce(self::DICHOTOMIES, function (array $carry, string $dichotomy) {
+            $carry[$dichotomy] = 0;
+            return $carry;
+        }, []);
+        $results = array_reduce($answers, function (array $carry, MbtiAnswer $answer) {
+            $carry[$answer->getValue()] += 1;
+            return $carry;
+        }, $keys);
+
+        $type = '';
+
+        foreach (self::DICHOTOMY_PAIRS as $pair) {
+            $scores = array_filter($results, function (string $dichotomy) use ($pair) {
+                return in_array($dichotomy, $pair);
+            }, ARRAY_FILTER_USE_KEY);
+            $type .= array_search(max($scores), $scores);;
+        }
+
+        $test->setResult($type);
+
+        $this->mbtiTestRepository->saveEndResults($test, $results);
     }
 }

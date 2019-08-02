@@ -1,0 +1,120 @@
+1:
+    A: 'Social interaction stimulates me'
+    B: 'Social interaction bores me'
+2:
+    A: 'I prefer hanging out alone'
+    B: 'I prefer hanging out in group'
+3:
+    A: 'Sometimes I spend too much time thinking without moving quickly enough to action'
+    B: 'Sometimes I go into action without thinking enough'
+4:
+    A: 'I prefer the activities that make me move'
+    B: 'I prefer the activities that make me think'
+5:
+    A: 'I prefer to communicate orally'
+    B: 'I prefer to communicate in writing'
+6:
+    A: 'I prefer meeting new people'
+    B: 'I prefer to deepen my contacts'
+7:
+    A: 'I prefer to discuss a non-private topic in a group'
+    B: 'I prefer to discuss a non-private topic alone'
+8:
+    A: 'I prefer to spend an evening alone with a loved one'
+    B: 'I prefer to spend an evening alone with more people'
+9:
+    A: 'In general, I am rather perceived as someone thoughtful and reserved'
+    B: 'In general, I am rather perceived as someone dynamic and open'
+10:
+    A: 'I prefer working in a group with more people'
+    B: 'I prefer working alone or with one person'
+11:
+    A: 'I prefer giving priority to ideas'
+    B: 'I prefer giving priority to facts'
+12:
+    A: 'I am realistic, I see reality as it is'
+    B: 'I focus on what could be'
+13:
+    A: 'I remember most of the details I observed'
+    B: 'I remember details when they relate to the overall scheme'
+14:
+    A: 'I prefer trusting my experience'
+    B: 'I prefer trusting my intuition'
+15:
+    A: 'I prefer to think of what might happen'
+    B: 'I prefer to focus on the present moment and what happens'
+16:
+    A: 'I do not have a hard time believing in esoteric stories (eg supernatural stories)'
+    B: 'I can not believe these stories if I have not experienced them personally'
+17:
+    A: 'I prefer to use safe and proven methods'
+    B: 'I prefer to use new methods'
+18:
+    A: 'I prefer to consider in detail all aspects of a subject'
+    B: 'I prefer to consider the aspects of a subject globally'
+19:
+    A: 'I prefer to talk about abstract or theoretical topics'
+    B: 'I prefer to talk about concrete and real subjects'
+20:
+    A: 'I solve problems by relying on my imagination'
+    B: 'I solve the problems based on my past experience, which has already worked'
+21:
+    A: 'I prefer to be diplomatic and tactful'
+    B: 'I prefer to be honest and direct'
+22:
+    A: 'I prefer to help others make logical decisions'
+    B: 'I prefer to help others express their feelings'
+23:
+    A: 'I prefer to attend situations or discussions where there is emotion'
+    B: 'I prefer to use my ability to analyze situations'
+24:
+    A: 'I prefer to use my beliefs and what I feel to make my decisions'
+    B: 'I prefer to rely on verifiable elements to make my decisions'
+25:
+    A: 'I prefer to draw conclusions based on how I feel and what I know about life'
+    B: 'I prefer to draw conclusions based on logic and careful analysis'
+26:
+    A: 'I am naturally critical'
+    B: 'I try to please others'
+27:
+    A: 'I prefer to be warm and friendly'
+    B: 'I prefer to be loyal and fair'
+28:
+    A: 'When a problem arises, I wonder if it''s really true'
+    B: 'When a problem arises, I wonder especially if it is important'
+29:
+    A: 'I evaluate the impact of my decisions on others'
+    B: 'I solve my problems logically'
+30:
+    A: 'I decide by analyzing the causes and effects from objective truth criteria ("That''s true " or "It''s wrong")'
+    B: 'I decide with my personal values ("This is good " or "It''s bad ") and my feelings ("I like " or "I do not like")'
+31:
+    A: 'I prefer to get all the information I need on a topic, think about it for a while and make a quick and definitive decision'
+    B: 'I prefer to take the time to consider all the possible elements of a subject before and after making my decision'
+32:
+    A: 'I prefer change and keep all options open'
+    B: 'I prefer consistency and know what can happen in advance'
+33:
+    A: 'I prefer that things can happen on their own'
+    B: 'I prefer things to be organized instead'
+34:
+    A: 'I favor my ability to adapt'
+    B: 'I privilege my ability to be methodical and organized'
+35:
+    A: 'I like to plan my life and master it'
+    B: 'I seek to understand rather than to control'
+36:
+    A: 'I trust my planning power more than my ability to improvise'
+    B: 'I trust my improvisational power more than my planning power'
+37:
+    A: 'I prefer to adapt to my environment'
+    B: 'I prefer to control my environment'
+38:
+    A: 'I prefer to search for information'
+    B: 'I prefer to make the decisions'
+39:
+    A: 'I do not tend to go back on what I decided, I went to the next step'
+    B: 'I tend to keep looking and reconsidering information even though things have already been fixed'
+40:
+    A: 'I prefer to engage if the others engage too'
+    B: 'I prefer to press for specific commitments to be made'

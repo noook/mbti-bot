@@ -68,7 +68,7 @@ class MbtiGenerateQuestionsCommand extends Command
         $this->em->flush();
 
         foreach ($translations as $lang => $dict) {
-            file_put_contents($this->translationsPath . "/mbti." . $lang . ".yml", Yaml::dump($dict));
+            file_put_contents($this->translationsPath . "/mbti-questions." . $lang . ".yml", Yaml::dump($dict));
         }
     }
 }

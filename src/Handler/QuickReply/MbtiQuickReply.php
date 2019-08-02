@@ -2,11 +2,14 @@
 
 namespace App\Handler\QuickReply;
 
-use App\Helper\MbtiHelper;
-use App\Messenger\MessengerRequestMessage;
-use App\Messenger\MessengerApi;
+use Symfony\Component\Translation\TranslatorInterface;
 use App\Collection\MessageFormatterCollection;
+use App\Entity\FacebookUser;
+use App\Helper\MbtiHelper;
+use App\Messenger\MessengerApi;
+use App\Messenger\MessengerRequestMessage;
 use App\Repository\FacebookUserRepository;
+use App\Repository\MbtiTestRepository;
 
 class MbtiQuickReply implements QuickReplyDomainInterface
 {
@@ -14,18 +17,24 @@ class MbtiQuickReply implements QuickReplyDomainInterface
     private $messageFormatterCollection;
     private $messenger;
     private $facebookUserRepository;
+    private $mbtiTestRepository;
+    private $translator;
 
     public function __construct(
         MbtiHelper $mbtiHelper,
         MessageFormatterCollection $messageFormatterCollection,
         MessengerApi $messenger,
-        FacebookUserRepository $facebookUserRepository
+        FacebookUserRepository $facebookUserRepository,
+        MbtiTestRepository $mbtiTestRepository,
+        TranslatorInterface $translator
     )
     {
         $this->mbtiHelper = $mbtiHelper;
         $this->messageFormatterCollection = $messageFormatterCollection;
         $this->messenger = $messenger;
         $this->facebookUserRepository = $facebookUserRepository;
+        $this->mbtiTestRepository = $mbtiTestRepository;
+        $this->translator = $translator;
     }
 
     public function getAlias(): string
@@ -51,18 +60,58 @@ class MbtiQuickReply implements QuickReplyDomainInterface
         $next = $this->mbtiHelper->answerQuestion($message->getSender(), $quickReply['value']);
         $user = $this->facebookUserRepository->findOneBy(['fbid' => $message->getSender()]);
 
+        if (null === $next) {
+            return $this->endTest($user);
+        }
+
         $element = $this
+            ->messageFormatterCollection
+            ->get($next['type'])
+            ->format($next);
+        $this
+            ->messenger
+            ->setRecipient($user->getFbid())
+            ->setTyping('on');
+        sleep(1);
+        $this
+            ->messenger
+            ->sendMessage($element)
+            ->setTyping('off');
+    }
+
+    private function endTest(FacebookUser $user)
+    {
+        $messages = [];
+        $test = $this->mbtiTestRepository->findLatestCompleted($user);
+        $type = $test->getResult();
+        $alias = $this->translator->trans('type_aka.' . $type, [], 'mbti', $user->getLocale());
+        $messages[] = [
+            'text' => $this->translator->trans('end_result', ['{TYPE}' => $type], 'mbti', $user->getLocale()),
+        ];
+        $messages[] = [
+            'text' => $this->translator->trans('type_aka.aka_base', ['{alias}' => $alias], 'mbti', $user->getLocale()),
+        ];
+        $messages[] = [
+            'text' => $this->translator->trans('summaries.' . $type, [], 'mbti', $user->getLocale()),
+        ];
+        $messages[] = [
+            'text' => $this->translator->trans('detail_link', ['{type}' => strtolower($type)], 'mbti', $user->getLocale()),
+        ];
+
+        foreach ($messages as $item) {
+            $message = $this
                 ->messageFormatterCollection
-                ->get($next['type'])
-                ->format($next);
+                ->get('text')
+                ->format($item);
             $this
                 ->messenger
                 ->setRecipient($user->getFbid())
                 ->setTyping('on');
-            sleep(1);
+            sleep(2);
             $this
                 ->messenger
-                ->sendMessage($element)
+                ->sendMessage($message)
                 ->setTyping('off');
+        }
     }
 }
