@@ -81,4 +81,15 @@ class MbtiTestRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getSingleResult();
     }
+
+    public function deleteCurrent(FacebookUser $user)
+    {
+        $test = $this->findOneBy([
+            'completed' => false,
+            'user' => $user,
+        ]);
+
+        $this->_em->remove($test);
+        $this->_em->flush();
+    }
 }

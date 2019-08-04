@@ -21,6 +21,8 @@ type_aka:
 detail_link: "You can read more details on your personnality on this link: https://www.16personalities.com/{type}-personality"
 
 take_the_test: 📝 Take the test
+reset_test: 🔁 Reset
+resume_test: ⏩ Resume
 
 summaries:
     ISFP: >-

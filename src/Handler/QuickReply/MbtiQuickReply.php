@@ -42,6 +42,25 @@ class MbtiQuickReply implements QuickReplyDomainInterface
         return QuickReplyDomainAliases::MBTI_DOMAIN;
     }
 
+    private function sendQuestions(array $questions, FacebookUser $user)
+    {
+        foreach ($questions as $message) {
+            $element = $this
+                ->messageFormatterCollection
+                ->get($message['type'])
+                ->format($message);
+            $this
+                ->messenger
+                ->setRecipient($user->getFbid())
+                ->setTyping('on');
+            sleep(1);
+            $this
+                ->messenger
+                ->sendMessage($element)
+                ->setTyping('off');
+        }
+    }
+
     public function handleReply(MessengerRequestMessage $message)
     {
         $quickReply = \json_decode($message->getQuickReply(), true);
@@ -51,6 +70,10 @@ class MbtiQuickReply implements QuickReplyDomainInterface
                 return $this->answer($message, $quickReply);
             case 'start-test':
                 return $this->startTest($message, $quickReply);
+            case 'reset-test':
+                return $this->resetTest($message, $quickReply);
+            case 'resume-test':
+                return $this->resumeTest($message, $quickReply);
             
             default:
                 break;
@@ -66,19 +89,7 @@ class MbtiQuickReply implements QuickReplyDomainInterface
             return $this->endTest($user);
         }
 
-        $element = $this
-            ->messageFormatterCollection
-            ->get($next['type'])
-            ->format($next);
-        $this
-            ->messenger
-            ->setRecipient($user->getFbid())
-            ->setTyping('on');
-        sleep(1);
-        $this
-            ->messenger
-            ->sendMessage($element)
-            ->setTyping('off');
+        $this->sendQuestions([$next], $user);
     }
 
     private function endTest(FacebookUser $user)
@@ -100,21 +111,7 @@ class MbtiQuickReply implements QuickReplyDomainInterface
             'text' => $this->translator->trans('detail_link', ['{type}' => strtolower($type)], 'mbti', $user->getLocale()),
         ];
 
-        foreach ($messages as $item) {
-            $message = $this
-                ->messageFormatterCollection
-                ->get('text')
-                ->format($item);
-            $this
-                ->messenger
-                ->setRecipient($user->getFbid())
-                ->setTyping('on');
-            sleep(2);
-            $this
-                ->messenger
-                ->sendMessage($message)
-                ->setTyping('off');
-        }
+        $this->sendQuestions($messages, $user);
     }
 
     private function startTest(MessengerRequestMessage $message, array $quickReply)
@@ -124,20 +121,24 @@ class MbtiQuickReply implements QuickReplyDomainInterface
         $questions = $this->mbtiHelper->getNextQuestion($test);
         $messages[] = $this->mbtiHelper->prepareQuestion($questions, $user);
 
-        foreach ($messages as $message) {
-            $element = $this
-                ->messageFormatterCollection
-                ->get($message['type'])
-                ->format($message);
-            $this
-                ->messenger
-                ->setRecipient($user->getFbid())
-                ->setTyping('on');
-            sleep(1);
-            $this
-                ->messenger
-                ->sendMessage($element)
-                ->setTyping('off');
-        }
+        $this->sendQuestions($messages, $user);
+    }
+
+    private function resumeTest(MessengerRequestMessage $message, array $quickReply)
+    {
+        $user = $this->facebookUserRepository->findOneBy(['fbid' => $message->getSender()]);
+        $test = $this->mbtiTestRepository->currentTest($user);
+        $questions = $this->mbtiHelper->getNextQuestion($test);
+        $messages[] = $this->mbtiHelper->prepareQuestion($questions, $user);
+
+        $this->sendQuestions($messages, $user);
+    }
+
+    private function resetTest(MessengerRequestMessage $message, array $quickReply)
+    {
+        $user = $this->facebookUserRepository->findOneBy(['fbid' => $message->getSender()]);
+        $this->mbtiTestRepository->deleteCurrent($user);
+
+        $this->startTest($message, $quickReply);
     }
 }

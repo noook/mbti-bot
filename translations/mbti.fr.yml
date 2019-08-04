@@ -21,6 +21,8 @@ type_aka:
 detail_link: "Plus de détails sur ton type de personnalité dans ce lien: https://www.16personalities.com/fr/la-personnalite-{type}"
 
 take_the_test: 📝 Faire le test
+reset_test: 🔁 Recommencer
+resume_test: ⏩ Continuer
 
 summaries:
     ISTP: >-

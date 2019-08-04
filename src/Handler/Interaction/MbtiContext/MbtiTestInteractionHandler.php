@@ -14,6 +14,7 @@ use App\Messenger\MessengerApi;
 use App\Messenger\MessengerRequestMessage;
 use App\Repository\FacebookUserRepository;
 use App\Repository\MbtiTestRepository;
+use App\Handler\QuickReply\QuickReplyDomainAliases;
 
 class MbtiTestInteractionHandler implements InteractionHandlerInterface
 {
@@ -55,8 +56,24 @@ class MbtiTestInteractionHandler implements InteractionHandlerInterface
 
         if ($test->getStep() > 1) {
             $message = [
-                'type' => MessageFormatterAliases::TEXT,
+                'type' => MessageFormatterAliases::QUICK_REPLY,
                 'text' => $this->translator->trans('test_already_started', [], null, $user->getLocale()),
+                'quick_replies' => [
+                    [
+                        'title' => $this->translator->trans('reset_test', [], 'mbti', $user->getLocale()),
+                        'payload' => \json_encode([
+                            'domain' => QuickReplyDomainAliases::MBTI_DOMAIN,
+                            'type' => 'reset-test',
+                        ]),
+                    ],
+                    [
+                        'title' => $this->translator->trans('resume_test', [], 'mbti', $user->getLocale()),
+                        'payload' => \json_encode([
+                            'domain' => QuickReplyDomainAliases::MBTI_DOMAIN,
+                            'type' => 'resume-test',
+                        ]),
+                    ],
+                ],
             ];
         } else {
             $questions = $this->mbtiHelper->getNextQuestion($test);
