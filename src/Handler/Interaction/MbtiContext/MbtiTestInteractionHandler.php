@@ -5,7 +5,6 @@ namespace App\Handler\Interaction\MbtiContext;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Translation\TranslatorInterface;
 use App\Collection\MessageFormatterCollection;
-use App\Entity\MbtiTest;
 use App\Formatter\MessageFormatterAliases;
 use App\Golem\GolemResponse;
 use App\Handler\Interaction\InteractionHandlerInterface;
@@ -52,50 +51,30 @@ class MbtiTestInteractionHandler implements InteractionHandlerInterface
     public function handleInteraction(MessengerRequestMessage $messengerRequest, GolemResponse $golemResponse)
     {
         $user = $this->facebookUserRepository->findOneBy(['fbid' => $messengerRequest->getSender()]);
-        $test = $this->mbtiTestRepository->currentTest($user);
-        $messages = [];
-
-        if (null === $test) {
-            $test = (new MbtiTest)
-                ->setCompleted(false)
-                ->setStep(1)
-                ->setUser($user);
-            $this->em->persist($test);
-            $this->em->flush();
-
-            $startMessages = ['lets_start_test', 'test_is_40_questions_long', 'answer_like_this'];
-            foreach ($startMessages as $message) {
-                $messages[] = [
-                    'type' => MessageFormatterAliases::TEXT,
-                    'text' => $this->translator->trans($message, [], null, $user->getLocale()),
-                ];
-            }
-        }
+        $test = $this->mbtiHelper->startTest($user);
 
         if ($test->getStep() > 1) {
-            $messages[] = [
+            $message = [
                 'type' => MessageFormatterAliases::TEXT,
                 'text' => $this->translator->trans('test_already_started', [], null, $user->getLocale()),
             ];
         } else {
             $questions = $this->mbtiHelper->getNextQuestion($test);
-            $messages[] = $this->mbtiHelper->prepareQuestion($questions, $user);
+            $message = $this->mbtiHelper->prepareQuestion($questions, $user);
         }
 
-        foreach ($messages as $message) {
-            $element = $this
-                ->messageFormatterCollection
-                ->get($message['type'])
-                ->format($message);
-            $this
-                ->messenger
-                ->setRecipient($user->getFbid())
-                ->setTyping('on');
-            sleep(1);
-            $this
-                ->messenger
-                ->sendMessage($element)
-                ->setTyping('off');
-        }
+        $element = $this
+            ->messageFormatterCollection
+            ->get($message['type'])
+            ->format($message);
+        $this
+            ->messenger
+            ->setRecipient($user->getFbid())
+            ->setTyping('on');
+        sleep(1);
+        $this
+            ->messenger
+            ->sendMessage($element)
+            ->setTyping('off');
     }
 }

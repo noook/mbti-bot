@@ -3,11 +3,13 @@
 namespace App\Helper;
 
 use Symfony\Component\Translation\TranslatorInterface;
+use App\Collection\MessageFormatterCollection;
 use App\Entity\FacebookUser;
 use App\Entity\MbtiAnswer;
 use App\Entity\MbtiTest;
 use App\Formatter\MessageFormatterAliases;
 use App\Handler\QuickReply\QuickReplyDomainAliases;
+use App\Messenger\MessengerApi;
 use App\Repository\FacebookUserRepository;
 use App\Repository\MbtiAnswerRepository;
 use App\Repository\MbtiQuestionRepository;
@@ -23,6 +25,8 @@ class MbtiHelper
     private $mbtiQuestionRepository;
     private $mbtiTestRepository;
     private $mbtiAnswerRepository;
+    private $messengerApi;
+    private $messageFormatterCollection;
     private $translator;
 
     public function __construct(
@@ -30,6 +34,8 @@ class MbtiHelper
         MbtiQuestionRepository $mbtiQuestionRepository,
         MbtiTestRepository $mbtiTestRepository,
         MbtiAnswerRepository $mbtiAnswerRepository,
+        MessengerApi $messengerApi,
+        MessageFormatterCollection $messageFormatterCollection,
         TranslatorInterface $translator
     )
     {
@@ -37,7 +43,42 @@ class MbtiHelper
         $this->mbtiQuestionRepository = $mbtiQuestionRepository;
         $this->mbtiTestRepository = $mbtiTestRepository;
         $this->mbtiAnswerRepository = $mbtiAnswerRepository;
+        $this->messengerApi = $messengerApi;
+        $this->messageFormatterCollection = $messageFormatterCollection;
         $this->translator = $translator;
+    }
+
+    public function startTest(FacebookUser $user): MbtiTest
+    {
+        $test = $this->mbtiTestRepository->currentTest($user);
+
+        if (null === $test) {
+            $test = $this->mbtiTestRepository->createTest($user);
+
+            $startMessages = ['lets_start_test', 'test_is_40_questions_long', 'answer_like_this'];
+            foreach ($startMessages as $message) {
+                $item = [
+                    'type' => MessageFormatterAliases::TEXT,
+                    'text' => $this->translator->trans($message, [], null, $user->getLocale()),
+                ];
+                $this
+                    ->messengerApi
+                    ->setRecipient($user->getFbid())
+                    ->setTyping('on');
+                sleep(1);
+                $this
+                    ->messengerApi
+                    ->sendMessage(
+                        $this
+                            ->messageFormatterCollection
+                            ->get($item['type'])
+                            ->format($item)
+                    )
+                    ->setTyping('off');
+            }
+        }
+
+        return $test;
     }
 
     /**
@@ -74,7 +115,7 @@ class MbtiHelper
             '',
             $emojis[1]. ' ' . $this->translator->trans($questions[1]->getStep() . '.' . $questions[1]->getKey(), [], 'mbti-questions', $user->getLocale()),
         ]);
-        shuffle($payloads);
+        // shuffle($payloads);
 
         return [
             'type' => MessageFormatterAliases::QUICK_REPLY,

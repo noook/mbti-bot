@@ -8,6 +8,10 @@ use App\Entity\FacebookUser;
 
 class FacebookApi
 {
+    const GET_STARTED_PAYLOAD = [
+        'domain' => 'main',
+    ];
+
     private $messengerToken;
     private $facebookUserRepository;
 
@@ -49,5 +53,36 @@ class FacebookApi
     {
         $user = $this->getInformations($fbid);
         $this->facebookUserRepository->insertOrUpdate($user);
+    }
+
+    public function updateBotProfile(): bool
+    {
+        $url = 'https://graph.facebook.com/v4.0/me/messenger_profile';
+
+        $query = http_build_query([
+            'access_token' => $this->messengerToken,
+        ]);
+
+        $opts = [
+            'http' => [
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/json',
+                'content' => \json_encode([
+                    'get_started' => [
+                        'payload' => \json_encode(self::GET_STARTED_PAYLOAD),
+                    ]
+                ]),
+            ],
+        ];
+
+        $context  = stream_context_create($opts);
+        try {
+            $response = file_get_contents("$url?$query", false, $context);
+        } catch (\Throwable $e) {
+            return false;
+        }
+        $response = \json_decode($response, true);
+
+        return $response['result'] === 'success';
     }
 }

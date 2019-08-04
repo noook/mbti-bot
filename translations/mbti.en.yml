@@ -20,6 +20,8 @@ type_aka:
 
 detail_link: "You can read more details on your personnality on this link: https://www.16personalities.com/{type}-personality"
 
+take_the_test: 📝 Take the test
+
 summaries:
     ISFP: >-
         Adventurer personalities are true artists, but not necessarily in

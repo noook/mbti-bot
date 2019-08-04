@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Handler\QuickReply;
+namespace App\Handler\Postback;
 
 use App\Messenger\MessengerRequestMessage;
 
-interface QuickReplyDomainInterface
+interface PostbackDomainInterface
 {
     public function getAlias(): string;
 

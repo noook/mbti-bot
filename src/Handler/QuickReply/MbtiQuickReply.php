@@ -49,6 +49,8 @@ class MbtiQuickReply implements QuickReplyDomainInterface
         switch ($quickReply['type']) {
             case 'answer':
                 return $this->answer($message, $quickReply);
+            case 'start-test':
+                return $this->startTest($message, $quickReply);
             
             default:
                 break;
@@ -111,6 +113,30 @@ class MbtiQuickReply implements QuickReplyDomainInterface
             $this
                 ->messenger
                 ->sendMessage($message)
+                ->setTyping('off');
+        }
+    }
+
+    private function startTest(MessengerRequestMessage $message, array $quickReply)
+    {
+        $user = $this->facebookUserRepository->findOneBy(['fbid' => $message->getSender()]);
+        $test = $this->mbtiHelper->startTest($user);
+        $questions = $this->mbtiHelper->getNextQuestion($test);
+        $messages[] = $this->mbtiHelper->prepareQuestion($questions, $user);
+
+        foreach ($messages as $message) {
+            $element = $this
+                ->messageFormatterCollection
+                ->get($message['type'])
+                ->format($message);
+            $this
+                ->messenger
+                ->setRecipient($user->getFbid())
+                ->setTyping('on');
+            sleep(1);
+            $this
+                ->messenger
+                ->sendMessage($element)
                 ->setTyping('off');
         }
     }

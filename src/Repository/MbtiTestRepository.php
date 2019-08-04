@@ -2,12 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\MbtiTest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\FacebookUser;
-use DateTimeImmutable;
-use Doctrine\ORM\Query\Expr\OrderBy;
+use App\Entity\MbtiTest;
 
 /**
  * @method MbtiTest|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,6 +18,18 @@ class MbtiTestRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, MbtiTest::class);
+    }
+
+    public function createTest(FacebookUser $user): MbtiTest
+    {
+        $test = (new MbtiTest)
+                ->setCompleted(false)
+                ->setStep(1)
+                ->setUser($user);
+        $this->_em->persist($test);
+        $this->_em->flush();
+
+        return $test;
     }
 
     public function currentTest(FacebookUser $user): ?MbtiTest
@@ -46,7 +56,7 @@ class MbtiTestRepository extends ServiceEntityRepository
     public function saveEndResults(MbtiTest $test, array $results)
     {
         $test
-            ->setCompletedAt(new DateTimeImmutable())
+            ->setCompletedAt(new \DateTimeImmutable())
             ->setI($results['I'])
             ->setE($results['E'])
             ->setN($results['N'])

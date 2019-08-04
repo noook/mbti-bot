@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
 use App\Collection\MessengerEventHandlerCollection;
+use App\Helper\Logger;
 use App\Messenger\MessengerRequest;
 use App\Messenger\MessengerApi;
 use App\Messenger\FacebookApi;
@@ -43,7 +44,8 @@ class MessengerController extends AbstractController
         Request $request,
         MessengerApi $messengerApi,
         MessengerEventHandlerCollection $messengerEventHandlerCollection,
-        FacebookApi $facebookApi
+        FacebookApi $facebookApi,
+        Logger $logger
     ): Response
     {
         $messengerRequest = new MessengerRequest($request->getContent());

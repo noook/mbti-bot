@@ -13,6 +13,7 @@ use App\DependencyInjection\Compiler\InteractionHandlerPass;
 use App\DependencyInjection\Compiler\MessageFormatterPass;
 use App\DependencyInjection\Compiler\MessengerEventPass;
 use App\DependencyInjection\Compiler\QuickReplyHandlerPass;
+use App\DependencyInjection\Compiler\PostbackHandlerPass;
 
 class Kernel extends BaseKernel
 {
@@ -35,6 +36,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new MessageFormatterPass());
         $container->addCompilerPass(new MessengerEventPass());
         $container->addCompilerPass(new QuickReplyHandlerPass());
+        $container->addCompilerPass(new PostbackHandlerPass());
         $container->addCompilerPass(new ContextHandlerPass());
         $container->addCompilerPass(new InteractionHandlerPass());
     }
