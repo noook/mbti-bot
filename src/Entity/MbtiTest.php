@@ -20,7 +20,7 @@ class MbtiTest
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\FacebookUser", inversedBy="mbtiTests")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $user;
 

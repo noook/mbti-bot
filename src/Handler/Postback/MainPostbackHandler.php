@@ -38,11 +38,14 @@ class MainPostbackHandler implements PostbackDomainInterface
     public function handleReply(MessengerRequestMessage $message)
     {
         $user = $this->facebookUserRepository->findOneBy(['fbid' => $message->getSender()]);
+        $name = null === $user ? '' : $user->getFirstname();
+        $locale = null === $user ? 'fr' : $user->getLocale();
         $messages = [];
+
         for ($i = 1; $i <= 3; $i++) {
             $messages[] = [
                 'type' => MessageFormatterAliases::TEXT,
-                'text' => $this->translator->trans('get_started_'.$i, ['{name}' => $user->getFirstname(), null, $user->getLocale()]),
+                'text' => $this->translator->trans('get_started_'.$i, ['{name}' => $name, null, $locale]),
             ];
         }
         $last = array_pop($messages);
@@ -50,7 +53,7 @@ class MainPostbackHandler implements PostbackDomainInterface
             'type' => MessageFormatterAliases::QUICK_REPLY,
             'quick_replies' => [
                 [
-                    'title' => $this->translator->trans('take_the_test', [], 'mbti', $user->getLocale()),
+                    'title' => $this->translator->trans('take_the_test', [], 'mbti', $locale),
                     'payload' => \json_encode([
                         'domain' => QuickReplyDomainAliases::MBTI_DOMAIN,
                         'type' => 'start-test',

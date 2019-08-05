@@ -1,8 +1,10 @@
+not_understood: Désolé, je n'ai pas compris ta demande
+bot_is_able_to: Pour l'instant, je suis capable de déterminer ton type MBTI si tu me le demandes !
 get_started_1: Bonjour {name} !
-get_started_2: Je suis un bot permettant de déterminer ton type MBTI à travers une série de 40 questionns ! Je serai aussi capable dans un futur proche de réaliser plus de choses!
+get_started_2: Je suis un bot permettant de déterminer ton type MBTI à travers une série de 40 questions ! Je serai aussi capable dans un futur proche de réaliser plus de choses!
 get_started_3: Que puis-je faire pour toi ? 😁
 lets_start_test: Très bien commençons le test ! 😁
-test_is_40_questions_long: Le test est composé de 40 questions du même format, auxquelles vous pourez répondre par deux options.
-answer_like_this: Répondez de façon naturelle, et ne vous situez pas dans un contexte professionnel. Votre comportement est différent dans ces situations.
-test_already_started: Un test est déjà en cours, voulez vous le continuer ou le recommencer ?
+test_is_40_questions_long: Le test est composé de 40 questions du même format, auxquelles tu pourras répondre par deux options.
+answer_like_this: Réponds de façon naturelle, et ne te situe pas dans un contexte professionnel. Ton comportement est différent dans ces situations.
+test_already_started: Un test est déjà en cours, veux-tu le continuer ou le recommencer ?
 question_x_of_y: "Question {step} / 40:"

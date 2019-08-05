@@ -48,6 +48,7 @@ class MessengerController extends AbstractController
         Logger $logger
     ): Response
     {
+        $logger->logJson('requests.log', $request->getContent());
         $messengerRequest = new MessengerRequest($request->getContent());
         
         if (self::OBJECT_REQUEST === $messengerRequest->getObject()) {

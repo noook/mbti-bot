@@ -23,7 +23,7 @@ class GolemResponse
     {
         $this->request = $data['request'];
         $this->type = $data['type'];
-        $this->call = $data['call'] ? new GolemCall($data['call']) : null;
+        $this->call = isset($data['call']) ? new GolemCall($data['call']) : null;
         $this->language = $data['request_language'];
         $this->text = $data['request_text'];
         $this->id = $data['id_request'];

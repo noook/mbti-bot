@@ -18,7 +18,7 @@ class MbtiAnswer
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\MbtiTest", inversedBy="answers")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $test;
 

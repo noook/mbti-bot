@@ -10,6 +10,7 @@ use App\Messenger\MessengerApi;
 use App\Messenger\MessengerRequestMessage;
 use App\Repository\FacebookUserRepository;
 use App\Repository\MbtiTestRepository;
+use App\Formatter\MessageFormatterAliases;
 
 class MbtiQuickReply implements QuickReplyDomainInterface
 {
@@ -99,15 +100,19 @@ class MbtiQuickReply implements QuickReplyDomainInterface
         $type = $test->getResult();
         $alias = $this->translator->trans('type_aka.' . $type, [], 'mbti', $user->getLocale());
         $messages[] = [
+            'type' => MessageFormatterAliases::TEXT,
             'text' => $this->translator->trans('end_result', ['{TYPE}' => $type], 'mbti', $user->getLocale()),
         ];
         $messages[] = [
+            'type' => MessageFormatterAliases::TEXT,
             'text' => $this->translator->trans('type_aka.aka_base', ['{alias}' => $alias], 'mbti', $user->getLocale()),
         ];
         $messages[] = [
+            'type' => MessageFormatterAliases::TEXT,
             'text' => $this->translator->trans('summaries.' . $type, [], 'mbti', $user->getLocale()),
         ];
         $messages[] = [
+            'type' => MessageFormatterAliases::TEXT,
             'text' => $this->translator->trans('detail_link', ['{type}' => strtolower($type)], 'mbti', $user->getLocale()),
         ];
 

@@ -21,7 +21,7 @@ class FacebookApi
         $this->facebookUserRepository = $facebookUserRepository;
     }
 
-    private function getInformations(string $fbid): FacebookUser
+    private function getInformations(string $fbid): ?FacebookUser
     {
         $url = 'https://graph.facebook.com/' . $fbid;
         $fields = implode(',', ['first_name', 'last_name', 'locale']);
@@ -39,19 +39,26 @@ class FacebookApi
         ];
 
         $context  = stream_context_create($opts);
-        $response = \json_decode(file_get_contents("$url?$query", false, $context), true);
+        try {
+            $response = \json_decode(file_get_contents("$url?$query", false, $context), true);
+        } catch (\Throwable $e) {
+            return null;
+        }
 
         return (new FacebookUser)
-            ->setFbid($response['id'])
-            ->setFirstname($response['first_name'])
-            ->setLastname($response['last_name'])
-            ->setLocale($response['locale'])
-            ->setLastActive(new \DateTimeImmutable());
+        ->setFbid($response['id'])
+        ->setFirstname($response['first_name'])
+        ->setLastname($response['last_name'])
+        ->setLocale($response['locale'])
+        ->setLastActive(new \DateTimeImmutable());
     }
 
     public function updateUser(string $fbid)
     {
         $user = $this->getInformations($fbid);
+        if (null === $user) {
+            return;
+        }
         $this->facebookUserRepository->insertOrUpdate($user);
     }
 
