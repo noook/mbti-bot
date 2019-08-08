@@ -17,6 +17,7 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.2",
         "symfony/debug": "4.3.*",
         "symfony/maker-bundle": "^1.12",
         "symfony/var-dumper": "4.3.*"

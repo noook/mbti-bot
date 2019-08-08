@@ -32,6 +32,11 @@ class MbtiAnswer
      */
     private $value;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $question;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +74,18 @@ class MbtiAnswer
     public function setValue(string $value): self
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    public function getQuestion(): ?int
+    {
+        return $this->question;
+    }
+
+    public function setQuestion(int $question): self
+    {
+        $this->question = $question;
 
         return $this;
     }
