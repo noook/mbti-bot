@@ -17,7 +17,8 @@ use App\Repository\MbtiTestRepository;
 
 class MbtiHelper
 {
-    const EMOJI_VOTE = ['🥝', '🍉', '🍎', '🍑', '🍍'];
+    const TEST_LENGTH = 40;
+    const EMOJI_VOTE = ['🥝', '🍉', '🍎', '🍑', '🍍', '🍌', '🥥', '🍒'];
     const DICHOTOMIES = ['I', 'E', 'N', 'S', 'T', 'F', 'J', 'P'];
     const DICHOTOMY_PAIRS = [['I', 'E'], ['N', 'S'], ['T', 'F'], ['J', 'P']];
 
@@ -87,7 +88,8 @@ class MbtiHelper
      */
     public function getNextQuestion(MbtiTest $test): array
     {
-        return $this->mbtiQuestionRepository->findBy(['step' => $test->getStep()]);
+        $answer = $this->mbtiAnswerRepository->findOneBy(['step' => $test->getStep()]);
+        return $this->mbtiQuestionRepository->findBy(['step' => $answer->getQuestion()]);
     }
 
     /**
@@ -98,6 +100,7 @@ class MbtiHelper
         $emojis = self::EMOJI_VOTE;
         shuffle($emojis);
         $emojis = array_slice($emojis, 0, 2);
+        $test = $this->mbtiTestRepository->currentTest($user);
 
         $payloads = [
             [
@@ -109,8 +112,9 @@ class MbtiHelper
                 'question' => $questions[1],
             ],
         ];
+        $answer = $this->mbtiAnswerRepository->findOneBy(['step' => $test->getStep()]);
         $text = implode("\n", [
-            $this->translator->trans('question_x_of_y', ['{step}' => $questions[0]->getStep()], null, $user->getLocale()),
+            $this->translator->trans('question_x_of_y', ['{step}' => $answer->getStep()], null, $user->getLocale()),
             $emojis[0]. ' ' . $this->translator->trans($questions[0]->getStep() . '.' . $questions[0]->getKey(), [], 'mbti-questions', $user->getLocale()),
             '',
             $emojis[1]. ' ' . $this->translator->trans($questions[1]->getStep() . '.' . $questions[1]->getKey(), [], 'mbti-questions', $user->getLocale()),
@@ -120,13 +124,13 @@ class MbtiHelper
         return [
             'type' => MessageFormatterAliases::QUICK_REPLY,
             'text' => $text,
-            'quick_replies' => array_map(function ($item) {
+            'quick_replies' => array_map(function ($item) use ($test) {
                 return [
                     'title' => $item['emoji'],
                     'payload' => \json_encode([
                         'domain' => QuickReplyDomainAliases::MBTI_DOMAIN,
                         'type' => 'answer',
-                        'step' => $item['question']->getStep(),
+                        'step' => $test->getStep(),
                         'value' => $item['question']->getValue(),
                     ]),
                 ];
@@ -134,17 +138,15 @@ class MbtiHelper
         ];
     }
 
-    public function answerQuestion(string $fbid, string $value): ?array
+    public function answerQuestion(string $fbid, array $reply): ?array
     {
         $user = $this->facebookUserRepository->findOneBy(['fbid' => $fbid]);
         $test = $this->mbtiTestRepository->findOneBy([
             'user' => $user,
             'completed' => false,
         ]);
-        $answer = (new MbtiAnswer())
-            ->setStep($test->getStep())
-            ->setTest($test)
-            ->setValue($value);
+        $answer = $this->mbtiAnswerRepository->findOneBy(['step' => $test->getStep()]);
+        $answer->setValue($reply['value']);
 
         $this->mbtiAnswerRepository->saveAnswer($answer);
         $this->mbtiTestRepository->nextStep($test);

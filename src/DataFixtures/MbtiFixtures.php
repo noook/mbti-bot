@@ -5,8 +5,9 @@ namespace App\DataFixtures;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use App\Entity\FacebookUser;
-use App\Entity\MbtiTest;
 use App\Entity\MbtiAnswer;
+use App\Helper\MbtiHelper;
+use App\Entity\MbtiTest;
 
 class MbtiFixtures extends Fixture
 {
@@ -23,7 +24,7 @@ class MbtiFixtures extends Fixture
             ->setCompleted(true)
             ->setUser($user)
             ->setResult('ISTP')
-            ->setStep(40)
+            ->setStep(MbtiHelper::TEST_LENGTH)
             ->setE(2)
             ->setI(8)
             ->setN(2)

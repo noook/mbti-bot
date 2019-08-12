@@ -6,6 +6,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\FacebookUser;
 use App\Entity\MbtiTest;
+use App\Helper\MbtiHelper;
+use App\Entity\MbtiAnswer;
 
 /**
  * @method MbtiTest|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,6 +28,22 @@ class MbtiTestRepository extends ServiceEntityRepository
                 ->setCompleted(false)
                 ->setStep(1)
                 ->setUser($user);
+
+        $answers = [];
+
+        for ($i = 1; $i <= MbtiHelper::TEST_LENGTH; $i++) {
+            $answers[$i] = (new MbtiAnswer)
+                ->setQuestion($i)
+                ->setValue(null)
+                ->setTest($test);
+        }
+        shuffle($answers);
+
+        foreach ($answers as $step => $answer) {
+            $answer->setStep($step + 1);
+            $this->_em->persist($answer);
+        }
+        
         $this->_em->persist($test);
         $this->_em->flush();
 

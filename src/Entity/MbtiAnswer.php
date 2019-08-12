@@ -28,7 +28,7 @@ class MbtiAnswer
     private $step;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $value;
 
@@ -71,7 +71,7 @@ class MbtiAnswer
         return $this->value;
     }
 
-    public function setValue(string $value): self
+    public function setValue(?string $value): self
     {
         $this->value = $value;
 

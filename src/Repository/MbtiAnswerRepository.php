@@ -21,7 +21,6 @@ class MbtiAnswerRepository extends ServiceEntityRepository
 
     public function saveAnswer(MbtiAnswer $answer)
     {
-        $this->_em->persist($answer);
         $this->_em->flush();
     }
 }
