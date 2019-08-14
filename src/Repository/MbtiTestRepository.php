@@ -60,7 +60,7 @@ class MbtiTestRepository extends ServiceEntityRepository
 
     public function nextStep(MbtiTest $test)
     {
-        if ($test->getStep() + 1 === 41) {
+        if ($test->getStep() + 1 === MbtiHelper::TEST_LENGTH + 1) {
             $test
                 ->setCompleted(true);
         } else {
