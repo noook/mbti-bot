@@ -88,7 +88,10 @@ class MbtiHelper
      */
     public function getNextQuestion(MbtiTest $test): array
     {
-        $answer = $this->mbtiAnswerRepository->findOneBy(['step' => $test->getStep()]);
+        $answer = $this->mbtiAnswerRepository->findOneBy([
+            'step' => $test->getStep(),
+            'test' => $test,
+        ]);
         return $this->mbtiQuestionRepository->findBy(['step' => $answer->getQuestion()]);
     }
 
@@ -112,7 +115,10 @@ class MbtiHelper
                 'question' => $questions[1],
             ],
         ];
-        $answer = $this->mbtiAnswerRepository->findOneBy(['step' => $test->getStep()]);
+        $answer = $this->mbtiAnswerRepository->findOneBy([
+            'step' => $test->getStep(),
+            'test' => $test,
+        ]);
         $text = implode("\n", [
             $this->translator->trans('question_x_of_y', ['{step}' => $answer->getStep()], null, $user->getLocale()),
             $emojis[0]. ' ' . $this->translator->trans($questions[0]->getStep() . '.' . $questions[0]->getKey(), [], 'mbti-questions', $user->getLocale()),

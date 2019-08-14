@@ -84,7 +84,10 @@ class MbtiQuickReply implements QuickReplyDomainInterface
     private function answer(MessengerRequestMessage $message, array $quickReply)
     {
         $user = $this->facebookUserRepository->findOneBy(['fbid' => $message->getSender()]);
-        $test = $this->mbtiTestRepository->findOneBy(['user' => $user]);
+        $test = $this->mbtiTestRepository->findOneBy([
+            'user' => $user,
+            'completed' => false,
+        ]);
     
         if ($quickReply['step'] !== $test->getStep()) {
             return;
