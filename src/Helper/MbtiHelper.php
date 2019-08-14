@@ -17,7 +17,7 @@ use App\Repository\MbtiTestRepository;
 
 class MbtiHelper
 {
-    const TEST_LENGTH = 40;
+    const TEST_LENGTH = 44;
     const EMOJI_VOTE = ['🥝', '🍉', '🍎', '🍑', '🍍', '🍌', '🥥', '🍒'];
     const DICHOTOMIES = ['I', 'E', 'N', 'S', 'T', 'F', 'J', 'P'];
     const DICHOTOMY_PAIRS = [['I', 'E'], ['N', 'S'], ['T', 'F'], ['J', 'P']];
@@ -56,7 +56,7 @@ class MbtiHelper
         if (null === $test) {
             $test = $this->mbtiTestRepository->createTest($user);
 
-            $startMessages = ['lets_start_test', 'test_is_40_questions_long', 'answer_like_this'];
+            $startMessages = ['lets_start_test', 'test_is_44_questions_long', 'answer_like_this'];
             foreach ($startMessages as $message) {
                 $item = [
                     'type' => MessageFormatterAliases::TEXT,

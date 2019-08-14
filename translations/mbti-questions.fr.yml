@@ -2,119 +2,131 @@
     A: 'L''interaction sociale me stimule'
     B: 'L''interaction sociale me fatigue'
 2:
+    A: 'Je n''ai pas de mal à m''adresser à un public nombreux'
+    B: 'J''ai des difficultés à me détendre lorsque je parle devant de nombreuses personnes'
+3:
     A: 'Je préfère sortir seul(e)'
     B: 'Je préfère sortir en groupe'
-3:
+4:
     A: 'Il m''arrive parfois de passer trop de temps à réfléchir sans passer assez rapidement à l''action'
     B: 'Il m''arrive parfois de passer à l''action sans avoir assez réfléchi'
-4:
+5:
     A: 'Je préfère les activités qui me font bouger'
     B: 'Je préfère les activités qui me font réfléchir'
-5:
+6:
     A: 'Je préfère communiquer à l''oral'
     B: 'Je préfère communiquer par écrit'
-6:
+7:
     A: 'Je préfère rencontrer de nouvelles personnes'
     B: 'Je préfère appronfondir mes contacts'
-7:
+8:
     A: 'Je préfère discuter d''un sujet non privé en groupe'
     B: 'Je préfère discuter d''un sujet non privé en tête à tête'
-8:
+9:
     A: 'Je préfère passer une soirée seul(e) avec un proche'
     B: 'Je préfère passer une soirée avec plus de personnes'
-9:
+10:
     A: 'En général, je suis plutôt perçu(e) comme quelqu''un de pensif(ve) et réservé(e)'
     B: 'En général, je suis plutôt perçu(e) comme quelqu''un de dynamique et ouvert(e)'
-10:
+11:
     A: 'Je préfère travailler en groupe avec plus de personnes'
     B: 'Je préfère travailler seul(e) ou avec une seule personne'
-11:
+12:
     A: 'Je préfère donner la priorité aux idées'
     B: 'Je préfère donner la priorité aux faits'
-12:
+13:
+    A: 'Je considère mon esprit comme plus créatif que pratique.'
+    B: 'Je considère mon esprit comme plus pratique que créatif.'
+14:
     A: 'Je suis réaliste, je vois la réalité comme elle est'
     B: 'Je me concentre sur ce qui pourrait être'
-13:
+15:
     A: 'Je me souviens de la majorité des détails que j''ai observé'
     B: 'Je me souviens des détails lorsqu''ils ont un lien avec le schéma d''ensemble'
-14:
+16:
     A: 'Je préfère faire confiance à mon expérience'
     B: 'Je préfère faire confiance à mon intuition'
-15:
+17:
     A: 'Je préfère penser à ce qui pourrait arriver'
     B: 'Je préfère me concentrer sur le moment présent et sur ce qui arrive'
-16:
+18:
     A: 'Je n''ai pas de mal à croire aux histoires ésotériques (exemple : histoires surnaturelles)'
     B: 'Je peux avoir du mal à croire aux histoires surnaturelles si je ne les ai pas personnellement vécues'
-17:
+19:
     A: 'Je préfère utiliser des méthodes sûres et éprouvées'
     B: 'Je préfère utiliser de nouvelles méthodes'
-18:
+20:
     A: 'Je préfère considérer en détails tous les aspects d''un sujet'
     B: 'Je préfère considérer globalement les aspects d''un sujet'
-19:
+21:
     A: 'Je préfère parler de sujets abstraits ou théoriques'
     B: 'Je préfère parler de sujets concrets et réels'
-20:
+22:
     A: 'Je résous les problèmes en comptant sur mon imagination'
     B: 'Je résous les problèmes en me basant sur mon expérience passée, ce qui a déjà fonctionné'
-21:
+23:
     A: 'Je préfère être diplomate et faire preuve de tact'
     B: 'Je préfère être honnête et direct'
-22:
+24:
     A: 'Je préfère aider les autres à prendre des décisions logiques'
     B: 'Je préfère aider les autres à exprimer leurs sentiments'
-23:
+25:
     A: 'Je préfère assister à des situations ou des discussions où il y a de l''émotion'
     B: 'Je préfère utiliser ma capacité d''analyse des situations'
-24:
+26:
+    A: 'Si vos amis sont vraiment tristes à propos d’une situation, vous êtes plus susceptible de leur offrir un soutien émotionnel'
+    B: 'Si vos amis sont vraiment tristes à propos d’une situation, vous êtes plus susceptible de leur suggérer des solutions au problème.'
+27:
     A: 'Je préfère utiliser mes convictions et ce que je ressens pour prendre mes décisions'
     B: 'Je préfère m''appuyer sur des éléments vérifiables pour prendre mes décisions'
-25:
+28:
     A: 'Je préfère tirer des conclusions basées sur ce que je ressens et ce que je connais de la vie'
     B: 'Je préfère tirer des conclusions fondées sur la logique et une analyse minutieuse'
-26:
+29:
     A: 'Je suis naturellement critique'
     B: 'Je tente de faire plaisir aux autres'
-27:
+30:
     A: 'Je préfère être chaleureux et amical'
     B: 'Je préfère être loyal et juste'
-28:
+31:
     A: 'Quand un problème se pose, je me demande surtout si c''est bien vrai'
     B: 'Quand un problème se pose, je me demande surtout si c''est bien important'
-29:
+32:
     A: 'J''évalue l''impact de mes décisions sur les autres.'
     B: 'Je résous mes problèmes avec logique.'
-30:
+33:
     A: 'Je décide en analysant les causes et les effets à partir de critères objectifs de vérité ("C''est vrai" ou "C''est faux")'
     B: 'Je décide avec mes valeurs personnelles ("C''est bien" ou "C''est mal") et mes sentiments ("J''aime" ou "Je n''aime pas")'
-31:
+34:
     A: 'Je préfère obtenir toute l''information dont j''ai besoin sur un sujet, y réfléchir un temps puis prendre une décision rapide et définitive'
     B: 'Je préfère prendre le temps de considérer tous les éléments possibles d''un sujet avant et après avoir pris ma décision'
-32:
+35:
     A: 'Je préfère le changement et garder toutes les options ouvertes'
     B: 'Je préfère la constance et savoir ce qui peut se passer à l''avance'
-33:
+36:
     A: 'Je préfère que les choses puissent arriver par elles-mêmes'
     B: 'Je préfère que les choses soient plutôt organisées'
-34:
+37:
+    A: 'Au travail et au domicile, votre environnement de vie change en fonction de votre humeur'
+    B: 'Au travail et au domicile, votre environnement de vie est assez ordonné'
+38:
     A: 'Je privilégie ma capacité de m''adapter'
     B: 'Je privilégie ma capacité d''être méthodique et organisé(e)'
-35:
+39:
     A: 'J''aime planifier ma vie et la maîtriser'
     B: 'Je cherche à comprendre plutôt qu''à maîtriser'
-36:
+40:
     A: 'Je fais plus confiance à mon pouvoir de planification qu’à mon pouvoir d''improvisation'
     B: 'Je fais plus confiance à mon pouvoir d''improvisation qu’à mon pouvoir de planification'
-37:
+41:
     A: 'Je préfère m''adapter à mon environnement'
     B: 'Je préfère contrôler mon environnement'
-38:
+42:
     A: 'Je préfère chercher les informations'
     B: 'Je préfère prendre les décisions'
-39:
+43:
     A: 'Je n''ai pas tendance à revenir sur ce que j''ai décidé, je suis passé(e) à la prochaine étape'
     B: 'J''ai tendance à continuer de chercher et reconsidérer des informations même si les choses ont déjà été fixées'
-40:
+44:
     A: 'Je préfère m''engager si les autres s''engagent aussi'
     B: 'Je préfère faire pression pour que des engagements précis soient pris'

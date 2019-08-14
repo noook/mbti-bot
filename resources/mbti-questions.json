@@ -22,6 +22,24 @@
       {
         "position": "A",
         "label": {
+          "en": "I don't mind speaking in front of a large public",
+          "fr": "Je n'ai pas de mal à m'adresser à un public nombreux"
+        },
+        "value": "E"
+      },
+      {
+        "position": "B",
+        "label": {
+          "en": "I have troubles staying calm while speaking to a large audience",
+          "fr": "J'ai des difficultés à me détendre lorsque je parle devant de nombreuses personnes"
+        },
+        "value": "I"
+      }
+    ],
+    [
+      {
+        "position": "A",
+        "label": {
           "en": "I prefer hanging out alone",
           "fr": "Je préfère sortir seul(e)"
         },
@@ -194,6 +212,24 @@
         "label": {
           "en": "I prefer giving priority to facts",
           "fr": "Je préfère donner la priorité aux faits"
+        },
+        "value": "S"
+      }
+    ],
+    [
+      {
+        "position": "A",
+        "label": {
+          "en": "I consider my spirit more creative than practical",
+          "fr": "Je considère mon esprit comme plus créatif que pratique."
+        },
+        "value": "N"
+      },
+      {
+        "position": "B",
+        "label": {
+          "en": "I consider my spirit more practical than creative",
+          "fr": "Je considère mon esprit comme plus pratique que créatif."
         },
         "value": "S"
       }
@@ -418,6 +454,24 @@
       {
         "position": "A",
         "label": {
+          "en": "I prefer to attend situations or discussions where there is emotion",
+          "fr": "Si vos amis sont vraiment tristes à propos d’une situation, vous êtes plus susceptible de leur offrir un soutien émotionnel"
+        },
+        "value": "F"
+      },
+      {
+        "position": "B",
+        "label": {
+          "en": "I prefer to use my ability to analyze situations",
+          "fr": "Si vos amis sont vraiment tristes à propos d’une situation, vous êtes plus susceptible de leur suggérer des solutions au problème."
+        },
+        "value": "T"
+      }
+    ],
+    [
+      {
+        "position": "A",
+        "label": {
           "en": "I prefer to use my beliefs and what I feel to make my decisions",
           "fr": "Je préfère utiliser mes convictions et ce que je ressens pour prendre mes décisions"
         },
@@ -590,6 +644,24 @@
         "label": {
           "en": "I prefer things to be organized instead",
           "fr": "Je préfère que les choses soient plutôt organisées"
+        },
+        "value": "J"
+      }
+    ],
+    [
+      {
+        "position": "A",
+        "label": {
+          "en": "I prefer that things can happen on their own",
+          "fr": "Au travail et au domicile, votre environnement de vie change en fonction de votre humeur"
+        },
+        "value": "P"
+      },
+      {
+        "position": "B",
+        "label": {
+          "en": "I prefer things to be organized instead",
+          "fr": "Au travail et au domicile, votre environnement de vie est assez ordonné"
         },
         "value": "J"
       }

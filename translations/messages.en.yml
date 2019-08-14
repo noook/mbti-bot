@@ -1,11 +1,11 @@
 not_understood: Sorry, I didn't understand your request.
 bot_is_able_to: For now, I can guess your MBTI type if you ask me to!
 get_started_1: Hello {name} !
-get_started_2: I'm a bot capable of determining your MBTI type through a serie of 40 questions ! I will also be able to do other cool things soon !
+get_started_2: I'm a bot capable of determining your MBTI type through a serie of 44 questions ! I will also be able to do other cool things soon !
 get_started_3: What can I do for you ? 😁
 
 lets_start_test: Alright, let's start the test ! 😁
-test_is_40_questions_long: The test is made of 40 questions of the same format, which you can answer by clicking on one of the two buttons under the question.
+test_is_44_questions_long: The test is made of 44 questions of the same format, which you can answer by clicking on one of the two buttons under the question.
 answer_like_this: Answer naturally, and don't put yourself in a professional situation. Your natural behaviour often changes in those situations.
 test_already_started: A test has already started. Would you like to continue or start over ?
-question_x_of_y: "Question {step} / 40:"
+question_x_of_y: "Question {step} / 44:"
