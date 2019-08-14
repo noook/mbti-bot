@@ -145,7 +145,10 @@ class MbtiHelper
             'user' => $user,
             'completed' => false,
         ]);
-        $answer = $this->mbtiAnswerRepository->findOneBy(['step' => $test->getStep()]);
+        $answer = $this->mbtiAnswerRepository->findOneBy([
+            'step' => $test->getStep(),
+            'test' => $test,
+        ]);
         $answer->setValue($reply['value']);
 
         $this->mbtiAnswerRepository->saveAnswer($answer);
